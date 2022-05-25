@@ -1,0 +1,74 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        xmlns:converters="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1800"
+        Closing="DataWindow_Closing">
+    <Window.DataContext>
+        <local:ViewData/>
+    </Window.DataContext>
+    <Window.Resources>
+        <converters:myconv x:Key="myconv"/>
+        <converters:myconv1 x:Key="myconv1"/>
+        <converters:myconv2 x:Key="myconv2"/>
+        <converters:myconv3 x:Key="myconv3"/>
+        <converters:myconv4 x:Key="myconv4"/>
+        <converters:myconv5 x:Key="myconv5"/>
+        <converters:myconv6 x:Key="myconv6"/>
+        <DataTemplate x:Key="listTemplate1">
+            <StackPanel Margin="5">
+                <TextBlock FontSize="16" Text="{Binding Path=grid,Converter={StaticResource myconv2}, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" 
+                           HorizontalAlignment="Center" />
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="129*"/>
+            <ColumnDefinition Width="799*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="File" HorizontalAlignment="Left" Height="50" Margin="48,50,0,0" VerticalAlignment="Top" Width="150" FontSize="30" HorizontalContentAlignment="Center" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Button Content="New" HorizontalAlignment="Left" Height="50" Margin="48,100,0,0" VerticalAlignment="Top" Width="150" Click="butnew" FontSize="20" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Button Content="Open" HorizontalAlignment="Left" Height="50" Margin="48,150,0,0" VerticalAlignment="Top" Width="150" Click="butopen" FontSize="20" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Button Content="Save" HorizontalAlignment="Left" Height="50" Margin="48,200,0,0" VerticalAlignment="Top" Width="150" Click="butsave" FontSize="20" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Label Content="Edit" HorizontalAlignment="Left" Height="50" Margin="119,50,0,0" VerticalAlignment="Top" Width="150" FontSize="30" HorizontalContentAlignment="Center" Grid.Column="2"/>
+        <Button Content="Add VMTime" HorizontalAlignment="Left" Height="50" Margin="119,100,0,0" VerticalAlignment="Top" Width="150" Click="buttime" FontSize="20" Grid.Column="2"/>
+        <Button Content="Add VMAccuracy" HorizontalAlignment="Left" Height="50" Margin="119,150,0,0" VerticalAlignment="Top" Width="150" Click="butacc" FontSize="20" Grid.Column="2"/>
+        <ComboBox Name="funch" SelectedItem="{Binding myVMf, Converter={StaticResource myconv1},Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}" 
+                  HorizontalAlignment="Left" Height="50" Margin="269,200,0,0" VerticalAlignment="Top" Width="150" FontSize="20" Grid.Column="2">
+            <TextBlock>vmdTan</TextBlock>
+            <TextBlock>vmdErfInv</TextBlock>
+        </ComboBox>
+        <TextBlock x:Name="textBlock" Text="Function:" HorizontalAlignment="Left" Height="50" Margin="119,200,0,0" VerticalAlignment="Top" Width="150" FontSize="20" Padding="30,10,5,10" Grid.Column="2" />
+        <TextBlock Text="Parameters:" HorizontalAlignment="Left" Height="50" Margin="119,250,0,0" VerticalAlignment="Top" Width="150" FontSize="20" Padding="30,10,5,10" Grid.Column="2" />
+        <TextBox Name="parch" Text="{Binding myVMGrid,Converter={StaticResource myconv},Mode=OneWayToSource,UpdateSourceTrigger=LostFocus}" HorizontalAlignment="Left" Height="50" Margin="269,250,0,0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Grid.Column="2"/>
+        <TextBlock Text="*arguments length, vector beginning and vector ending separated by 1 space"
+                   HorizontalAlignment="Left" Height="50" Margin="119,300,0,0" VerticalAlignment="Top" Width="400" FontSize="10"  Grid.Column="2" Padding="30,10,5,10"/>
+        <TextBlock Name="txtchan" Grid.Column="1" Visibility="Hidden" HorizontalAlignment="Left" Height="50" Margin="48,726,0,0" Text="Changed!" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Padding="30,10,5,10" FontSize="20"/>
+        <TextBlock Name="maxha" Grid.Column="2" HorizontalAlignment="Left" Height="50" Margin="999,100,0,0" 
+                   Text="{Binding Path=.,Mode=OneWay,Converter={StaticResource myconv6}, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="232"  Padding="30,10,5,10" FontSize="20"/>
+        <TextBlock Name="maxep" Grid.Column="2" HorizontalAlignment="Left" Height="50" Margin="999,200,0,0"
+                   Text="{Binding Path=.,Mode=OneWay,Converter={StaticResource myconv6}, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" 
+                   Width="232"  Padding="30,10,5,10" FontSize="20"/>
+        <ListBox x:Name="timelist" Grid.Column="2" HorizontalAlignment="Left" Height="330" Margin="496,430,0,0" VerticalAlignment="Top"
+                 Width="200" ItemTemplate="{StaticResource listTemplate1}" 
+                 SelectedIndex="{Binding selectedtime, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"/>
+        <ListBox x:Name="acclist" Grid.Column="2" HorizontalAlignment="Left" Height="330" Margin="496,50,0,0" VerticalAlignment="Top"
+                 Width="200" ItemTemplate="{StaticResource listTemplate1}" 
+                 SelectedIndex="{Binding selectedacc, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock  x:Name="timetext" Grid.Column="2" HorizontalAlignment="Left" Height="330" Margin="701,435,0,0"
+                    Text="{Binding Path=svmt,Converter={StaticResource myconv3}, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="288"/>
+        <TextBlock  x:Name="acctext" Grid.Column="2" HorizontalAlignment="Left" Height="330" Margin="696,50,0,0"
+                    Text="{Binding Path=svma, Converter={StaticResource myconv4}, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="288"/>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Height="35" Margin="496,10,0,0" Text="Accuracy List" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontSize="20"/>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" Height="35" Margin="496,392,0,0" Text="Time List" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontSize="20"/>
+        <TextBlock Grid.Column="1" x:Name="vischeck" Visibility="{Binding Path=., Converter={StaticResource myconv5}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="45" Margin="10,706,0,0" Text="Something changed!" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" FontSize="20"/>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left"  FontSize="20" Height="45" Margin="999,50,0,0" Text="Min of (time of EP)/(time of C)" TextWrapping="Wrap" VerticalAlignment="Top" Width="275"/>
+        <TextBlock Grid.Column="2" HorizontalAlignment="Left" FontSize="20" Height="40" Margin="999,155,0,0" Text="Min of (time of HA)/(time of C)" TextWrapping="Wrap" VerticalAlignment="Top" Width="317"/>
+    </Grid>
+</Window>
