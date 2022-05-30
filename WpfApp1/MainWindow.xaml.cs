@@ -73,7 +73,7 @@ namespace WpfApp1
                 openFileDialog.ShowDialog();
                 myviewdata = new ViewData();
                 myviewdata.myfilename = openFileDialog.FileName;
-                mybl = myviewdata.Load(myviewdata.myfilename);
+                myviewdata.Load(myviewdata.myfilename);
             }
             else
             {
