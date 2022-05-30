@@ -73,7 +73,7 @@ namespace WpfApp1
                 openFileDialog.ShowDialog();
                 myviewdata = new ViewData();
                 myviewdata.myfilename = openFileDialog.FileName;
-                mybl=myviewdata.Load(myviewdata.myfilename);
+                mybl = myviewdata.Load(myviewdata.myfilename);
             }
             else
             {
@@ -110,6 +110,7 @@ namespace WpfApp1
                 maxep.DataContext = myviewdata.myben.minEPtoC;
                 maxha.DataContext = myviewdata.myben.minHAtoC;
             }
+
         }
 
         void butsave(object sender, RoutedEventArgs e)
